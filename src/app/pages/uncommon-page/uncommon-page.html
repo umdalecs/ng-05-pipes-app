@@ -1,0 +1,89 @@
+<section class="mx-5 mb-5">
+  <h1 class="text-2xl font-bold">Pipes no tan comunes</h1>
+  <h3 class="text-xl font-thin">Pipes incluidos en angular</h3>
+</section>
+
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <app-card title="i18n Select Pipe">
+    <p>
+      Saludos {{ client().name }}, es un placer
+      {{ client().gender | i18nSelect : invitationMap }} a nuestro evento
+    </p>
+    <button class="btn btn-primary" (click)="changeClient()">
+      Cambiar cliente
+    </button>
+  </app-card>
+
+  <app-card title="i18n Plural Pipe">
+    <p>
+      Actualmente
+      {{ clients().length | i18nPlural : clientsMap() }}
+    </p>
+    <button
+      class="btn btn-primary"
+      (click)="deleteClient()"
+      [disabled]="clients().length === 0"
+    >
+      Borrar cliente
+    </button>
+  </app-card>
+
+  <app-card title="Slice Pipe">
+    <b> Original </b>
+    <p class="text-primary">{{ clients().join(", ") }}</p>
+
+    <b>Slice:0:2</b>
+    <p class="mt-2">
+      {{ clients() | slice : 0 : 2 }}
+    </p>
+
+    <b>Slice:1:2</b>
+    <p class="mt-2">
+      {{ clients() | slice : 1 : 2 }}
+    </p>
+    <b>Slice:1:4</b>
+    <p class="mt-2">
+      {{ clients() | slice : 1 : 4 }}
+    </p>
+  </app-card>
+
+  <app-card title="JSON Pipe">
+    <pre class="text-primary">{{ clients() | json }}</pre>
+    <pre class="text-primary">{{ client() | json }}</pre>
+    <p class="text-primary">{{ clients().join(", ") | json | uppercase }}</p>
+  </app-card>
+
+  <app-card title="KeyValue Pipe">
+    <ul>
+      @for (item of profile | keyvalue; track $index) {
+      <li>
+        <strong>{{ item.key | titlecase }}</strong>
+        <span class="text-primary">
+          {{ item.value }}
+        </span>
+      </li>
+      }
+    </ul>
+  </app-card>
+
+  <app-card title="Async Pipe">
+    <h3 class="text-3xl">Promise</h3>
+    @if ( promiseValue | async; as value ) {
+    <p class="text-primary">{{ value }}</p>
+    }
+    <!--  -->
+    @else {
+    <p class="text-accent">Cargando</p>
+    }
+
+    <h3 class="text-3xl">Observable</h3>
+    @if ( myObservableTimer | async; as value ) {
+    <p class="text-primary">{{ value }}</p>
+    }
+    <!--  -->
+    @else {
+    <p class="text-accent">Esperando el primer valor</p>
+    }
+  </app-card>
+
+</section>
